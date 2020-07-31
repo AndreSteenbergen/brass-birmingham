@@ -4,5 +4,5 @@ export const industries = {
     COAL : "Coal Mine",
     POTTERY : "Pottery",
     BEER : "Beer Brewery",
-    IRON : "Ironworks"
+    IRON : "Iron Works"
 }

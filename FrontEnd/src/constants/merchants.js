@@ -1,3 +1,5 @@
+import { industries } from "./industries";
+
 export const merchantBonus = {
     VICTORY_POINTS : "VICTORY_POINTS",
     MONEY : "MONEY",
@@ -43,10 +45,9 @@ export const merchants = {
     }
 };
 
-//TODO: hier ben ik gebleven.
 export const merchantSales = {
-    2 : [  ],
-    3 : [  ],
-    4 : [  ]
+    2 : [ null, null, industries.COTTON, industries.MAN_GOODS, [inudstries.MAN_GOODS, industries.COTTON, industries.POTTERY] ],
+    3 : [ null, industries.POTTERY ],
+    4 : [ industries.COTTON, industries.MAN_GOODS ]
 }
 
