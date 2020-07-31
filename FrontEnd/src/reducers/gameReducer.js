@@ -2,15 +2,18 @@ import update from 'immutability-helper';
 import Guid from 'guid';
 
 import { ActionTypes } from '../actions/boardActions';
-import { Cities, Merchants } from '../constants';
+import { Cities, Merchants, Cards, Industries, Canals, Rails, Merchants, MerchantBonus, BreweryFarms, MerchantSales } from '../constants';
+import { breweryFarms } from '../constants/breweryFarms';
+
+
 
 function getInitialState() {
     return {
         boardId : Guid.raw(),
         cities : Cities,
         merchants : Merchants,
-        canals : [],
-        rails : []
+        links: Canals,
+        breweryFarms: BreweryFarms, 
     };
 }
 
