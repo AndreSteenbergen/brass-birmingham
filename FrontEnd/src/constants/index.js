@@ -1,3 +1,5 @@
+import { playerColors as PlayerColors } from './playerColors';
+import { eras as Eras } from './eras';
 import { cities as Cities } from './cities';
 import { industries as Industries } from './industries';
 import { merchants as Merchants, merchantBonus as MerchantBonus, merchantSales as MerchantSales } from './merchants';
@@ -14,3 +16,5 @@ export { BreweryFarms }
 export { Canals }
 export { Rails }
 export { MerchantSales }
+export { PlayerColors }
+export { Eras }

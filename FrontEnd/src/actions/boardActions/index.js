@@ -7,3 +7,10 @@ export const setupGame = (numberOfPlayers) => ({
     domain : ActionTypes.DOMAIN,
     numberOfPlayers : numberOfPlayers
 });
+
+export const takeSeat = (color, name) => ({
+    type: ActionTypes.TAKE_SEAT,
+    domain : ActionTypes.DOMAIN,
+    color : color,
+    name : name
+});
