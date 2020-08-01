@@ -5,25 +5,17 @@ import { ActionTypes } from '../actions/boardActions';
 import gameReducer from './gameReducer';
 import profileReducer from './profileReducer';
 
-//https://redux.js.org/recipes/code-splitting/#using-a-reducer-manager
 export function createReducerManager(initialReducers) {
   const reducers = { ...initialReducers }
-  let combinedReducer = combineReducers(reducers)
-
+  
   return {
     getReducerMap: () => reducers,
-
-    // The root reducer function exposed by this object
-    // This will be passed to the store
     reduce: (state, action) => {
-        //when the action is to setup a board, create a new gameReducer and add that one to the keys
         if (action.type === ActionTypes.SETUP_GAME) {
-            reducers[action.boardId] = gameReducer;
-            combineReducers(reducers);
+            reducers[action.boardId] = gameReducer;            
         }
-      
-        // Delegate to the combined reducer
-        return combinedReducer(state, action)
+
+        return combineReducers(reducers)(state, action);
     }
   }
 }
