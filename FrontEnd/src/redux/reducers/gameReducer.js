@@ -7,6 +7,7 @@ function processSetupGame(state, action) {
     return update(state, {
         initial : { $set : false },
         boardId : { $set : action.boardId },
+        hotseat : { $set : action.hotseat },
         era : { $set : Eras.canal },
         
         numberOfPlayers : { $set : action.numberOfPlayers },
