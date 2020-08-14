@@ -1,0 +1,32 @@
+.currentgame {
+    svg {
+        background : url(/images/board.jpg);
+        //background: burlywood;
+        background-size : cover;
+
+        text {
+            font-weight: 900;
+            text-transform: uppercase;
+            text-anchor : middle;
+            color : white;
+            font-size : 35px;
+            fill : white;            
+            stroke : black;
+            stroke-width : 3;
+        }
+
+        rect.industry {
+            stroke-width : 3;
+            fill : rgba(255,255,255,0.01);            
+            cursor: pointer;
+            
+            stroke : white;
+            stroke-width : 3;
+
+            &.selected {
+                stroke : white;
+                stroke-width : 20;
+            }
+        }        
+    }
+}
