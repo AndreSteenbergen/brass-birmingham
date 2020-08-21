@@ -67,27 +67,51 @@ class CurrentGame extends React.Component {
                 />)}</g>;
     }
 
+    renderPlayerOptions() {
+        let numberOfPlayers = this.props.numberOfPlayers;
+
+        for (let i = 0; i < numberOfPlayers; i++) {
+            console.log("The number is " + i);
+        }
+        if (numberOfPlayers === 4 ) 
+             {
+                 console.log ("we are full");
+             }
+        else {
+                console.log ("Come and join" );
+             }
+        return <></>;
+    }
+
     render() {
         console.log( this.props );
         return <div className="currentgame">
-            <span>CURRENT GAME: {this.props.gameId} ({this.props.numberOfPlayers} players)</span>
-            <svg viewBox="0 0 4000 4000">
-                <g className="selectors">
-                    <image onMouseEnter={() => this.highlight(Industries.POTTERY)} onMouseLeave={() => this.highlight(null)} preserveAspectRatio="xMidYMid meet" xlinkHref="./images/pottery.png" x="100" y="100" width="140" height="140"></image>
-                    <image onMouseEnter={() => this.highlight(Industries.MAN_GOODS)} onMouseLeave={() => this.highlight(null)} preserveAspectRatio="xMidYMid meet" xlinkHref="./images/manufactured-goods.png" x="100" y="300" width="140" height="140"></image>
-                    <image onMouseEnter={() => this.highlight(Industries.COTTON)} onMouseLeave={() => this.highlight(null)} preserveAspectRatio="xMidYMid meet" xlinkHref="./images/cotton-mill.png" x="100" y="500" width="140" height="140"></image>
-                    <image onMouseEnter={() => this.highlight(Industries.IRON)} onMouseLeave={() => this.highlight(null)} preserveAspectRatio="xMidYMid meet" xlinkHref="./images/iron-works.png" x="100" y="700" width="140" height="140"></image>
-                    <image onMouseEnter={() => this.highlight(Industries.COAL)} onMouseLeave={() => this.highlight(null)} preserveAspectRatio="xMidYMid meet" xlinkHref="./images/coal-mine.png" x="100" y="900" width="140" height="140"></image>
-                    <image onMouseEnter={() => this.highlight(Industries.BEER)} onMouseLeave={() => this.highlight(null)} preserveAspectRatio="xMidYMid meet" xlinkHref="./images/brewery.png" x="100" y="1100" width="140" height="140"></image>
-                </g>
+            
+            {(this.props.gameId && (
+                <>
+                <span>CURRENT GAME: {this.props.gameId} ({this.props.numberOfPlayers} players)</span>
 
-                {Object.keys(Cities).map(c => (
-                    <g key={c} transform={`translate(${Cities[c].coordinates.x} ${Cities[c].coordinates.y})`}>
-                        <text x="0" y="0">{Cities[c].name}</text>
-                        {this.renderIndustries(c)}
-                    </g>
-                ))}
-            </svg>
+                {(!this.props.past.length && this.renderPlayerOptions()) ||
+                    <svg viewBox="0 0 4000 4000">
+                        <g className="selectors">
+                            <image onMouseEnter={() => this.highlight(Industries.POTTERY)} onMouseLeave={() => this.highlight(null)} preserveAspectRatio="xMidYMid meet" xlinkHref="./images/pottery.png" x="100" y="100" width="140" height="140"></image>
+                            <image onMouseEnter={() => this.highlight(Industries.MAN_GOODS)} onMouseLeave={() => this.highlight(null)} preserveAspectRatio="xMidYMid meet" xlinkHref="./images/manufactured-goods.png" x="100" y="300" width="140" height="140"></image>
+                            <image onMouseEnter={() => this.highlight(Industries.COTTON)} onMouseLeave={() => this.highlight(null)} preserveAspectRatio="xMidYMid meet" xlinkHref="./images/cotton-mill.png" x="100" y="500" width="140" height="140"></image>
+                            <image onMouseEnter={() => this.highlight(Industries.IRON)} onMouseLeave={() => this.highlight(null)} preserveAspectRatio="xMidYMid meet" xlinkHref="./images/iron-works.png" x="100" y="700" width="140" height="140"></image>
+                            <image onMouseEnter={() => this.highlight(Industries.COAL)} onMouseLeave={() => this.highlight(null)} preserveAspectRatio="xMidYMid meet" xlinkHref="./images/coal-mine.png" x="100" y="900" width="140" height="140"></image>
+                            <image onMouseEnter={() => this.highlight(Industries.BEER)} onMouseLeave={() => this.highlight(null)} preserveAspectRatio="xMidYMid meet" xlinkHref="./images/brewery.png" x="100" y="1100" width="140" height="140"></image>
+                        </g>
+
+                        {Object.keys(Cities).map(c => (
+                            <g key={c} transform={`translate(${Cities[c].coordinates.x} ${Cities[c].coordinates.y})`}>
+                                <text x="0" y="0">{Cities[c].name}</text>
+                                {this.renderIndustries(c)}
+                            </g>
+                        ))}
+                    </svg>
+                }
+            </>
+            )) || <span>Kies een spel of start een nieuw spel</span>}
         </div>
     }
 }

@@ -13,7 +13,7 @@ class GameList extends React.Component {
             <ul className="activeGames">
                 {this.props.profile.activeGames.map(g => <li onClick={() => this.props.selectGame(g.boardId)} key={g.boardId}>{g.boardId}</li>)}
             </ul>
-            
+ 
             <div className="startGame">
                 <h3>Start new game</h3>
                 <button onClick={() => this.props.createGame(2) }>2 player game</button>
