@@ -1,15 +1,19 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import { Cities, Industries } from "../constants";
+import { Cities, Industries, PlayerColors } from "../constants";
 
 import './game.scss'
+import { playerColors } from "../constants/playerColors";
 
 class CurrentGame extends React.Component {
     constructor (props) {
         super(props);
 
-        this.state = {};
+        this.state = {
+            selectedPlayers: {}
+            
+        };
     }
 
     highlight(industry) {
@@ -66,21 +70,35 @@ class CurrentGame extends React.Component {
                 rx={rx}
                 />)}</g>;
     }
+    
+    togglePlayer(color){
+       
+        let selectedPlayers = {...this.state.selectedPlayers};
+        selectedPlayers[color] = !selectedPlayers[color];
+        this.setState({selectedPlayers: selectedPlayers});
+
+    }
 
     renderPlayerOptions() {
         let numberOfPlayers = this.props.numberOfPlayers;
+        
+        let playerOptions = Object.keys(PlayerColors);
+        let selectedPlayers = this.state.selectedPlayers;
 
-        for (let i = 0; i < numberOfPlayers; i++) {
-            console.log("The number is " + i);
+        let chosenPlayers = 0;
+        for (let i = 0; i < playerOptions.length; i++) {
+            if (selectedPlayers[playerOptions[i]]) chosenPlayers += 1;            
         }
-        if (numberOfPlayers === 4 ) 
-             {
-                 console.log ("we are full");
-             }
-        else {
-                console.log ("Come and join" );
-             }
-        return <></>;
+        
+        return <div><h2>Choose {numberOfPlayers} players</h2><ul className="playerselection">
+            {playerOptions.map(p => <li key={p}>
+                <input type="checkbox" checked={!!this.state.selectedPlayers[p]} onChange={() => this.togglePlayer(p)}/>
+                <img src={`/images/${PlayerColors[p].playerPrefix}player.jpg`} />
+                </li>)}            
+        </ul>
+                <p>Already {chosenPlayers} chosen players;</p>
+                {chosenPlayers === numberOfPlayers ? "WE KUNNEN VERDER" : null }
+        </div>;
     }
 
     render() {
