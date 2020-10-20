@@ -2,9 +2,10 @@ import React from "react";
 import { connect } from "react-redux";
 
 import { Cities, Industries, PlayerColors } from "../constants";
+import { takeSeat } from "../redux/actions/boardActions";
 
 import './game.scss'
-import { playerColors } from "../constants/playerColors";
+
 
 class CurrentGame extends React.Component {
     constructor (props) {
@@ -78,6 +79,10 @@ class CurrentGame extends React.Component {
         this.setState({selectedPlayers: selectedPlayers});
 
     }
+    
+    startGame() {
+        this.props.takeSeat && this.props.takeSeat(Object.keys(this.state.selectedPlayers));
+    }
 
     renderPlayerOptions() {
         let numberOfPlayers = this.props.numberOfPlayers;
@@ -93,12 +98,47 @@ class CurrentGame extends React.Component {
         return <div><h2>Choose {numberOfPlayers} players</h2><ul className="playerselection">
             {playerOptions.map(p => <li key={p}>
                 <input type="checkbox" checked={!!this.state.selectedPlayers[p]} onChange={() => this.togglePlayer(p)}/>
-                <img src={`/images/${PlayerColors[p].playerPrefix}player.jpg`} />
+                <img alt={`${PlayerColors[p].playerPrefix}player`} src={`/images/${PlayerColors[p].playerPrefix}player.jpg`} />
                 </li>)}            
         </ul>
                 <p>Already {chosenPlayers} chosen players;</p>
-                {chosenPlayers === numberOfPlayers ? "WE KUNNEN VERDER" : null }
+                {chosenPlayers === numberOfPlayers ? <button onClick={() => this.startGame()}>Start game</button> : null }
         </div>;
+    }
+
+    renderSelectedPlayers() {
+        return this.props.selectedPlayers.map((p, i) => <image
+            key={p}
+            preserveAspectRatio="xMidYMid meet"
+            xlinkHref={`/images/${PlayerColors[p].playerPrefix}player.jpg`}
+            clipPath="url(#avatar-clip)"
+            transform={`translate(275,${2560+i*323})`}
+            x="0"
+            y="0"
+            width="260"
+            height="260" />
+        )
+    }
+
+    renderMarkets() {
+        let result = [];
+        
+        let i = this.props.coalMarket;
+        while (i) {
+            let j = 14 - i;
+            result.push(<circle key={`coal-${j}`} cx={3380 + 85 * (1 - (j % 2))} cy={2075 - (j - (j % 2)) * 60.4} r={25} stroke="white" strokeWidth="3" fill="black" />);
+            i--;
+        }
+
+        i = this.props.ironMarket;
+        while (i) {
+            let j = 10 - i;
+            result.push(<circle key={`iron-${j}`} cx={3600 + 85 * (1 - (j % 2))} cy={2075 - (j - (j % 2)) * 60.4} r={25} stroke="black" strokeWidth="3" fill="orange" />);
+            i--;
+        }
+
+
+        return result;
     }
 
     render() {
@@ -111,6 +151,13 @@ class CurrentGame extends React.Component {
 
                 {(!this.props.past.length && this.renderPlayerOptions()) ||
                     <svg viewBox="0 0 4000 4000">
+                        <defs>
+                            <clipPath id="avatar-clip">
+                            <circle cx="130" cy="130" r="130" />
+                            </clipPath>
+
+                        </defs>
+
                         <g className="selectors">
                             <image onMouseEnter={() => this.highlight(Industries.POTTERY)} onMouseLeave={() => this.highlight(null)} preserveAspectRatio="xMidYMid meet" xlinkHref="./images/pottery.png" x="100" y="100" width="140" height="140"></image>
                             <image onMouseEnter={() => this.highlight(Industries.MAN_GOODS)} onMouseLeave={() => this.highlight(null)} preserveAspectRatio="xMidYMid meet" xlinkHref="./images/manufactured-goods.png" x="100" y="300" width="140" height="140"></image>
@@ -126,6 +173,9 @@ class CurrentGame extends React.Component {
                                 {this.renderIndustries(c)}
                             </g>
                         ))}
+
+                        {this.renderMarkets()}
+                        {this.renderSelectedPlayers()}
                     </svg>
                 }
             </>
@@ -141,7 +191,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        
+        takeSeat : (selectedPlayers) => dispatch( takeSeat(selectedPlayers ))
     }
 }
 
