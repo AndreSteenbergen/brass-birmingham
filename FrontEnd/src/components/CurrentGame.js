@@ -81,7 +81,7 @@ class CurrentGame extends React.Component {
     }
     
     startGame() {
-        this.props.takeSeat && this.props.takeSeat(Object.keys(this.state.selectedPlayers));
+        this.props.takeSeat && this.props.takeSeat(this.props.boardId, Object.keys(this.state.selectedPlayers));
     }
 
     renderPlayerOptions() {
@@ -141,6 +141,26 @@ class CurrentGame extends React.Component {
         return result;
     }
 
+    renderDeck() {
+        let startLength = this.props.cardCount;
+        let currentLength = this.props.cardDeck.length;
+        let diff = startLength - currentLength;
+
+        let w = 499 * 0.9;
+        let h = 702 * 0.9;
+
+        return this.props.cardDeck.map((p, i) => <image
+            key={ i + diff }
+            preserveAspectRatio="xMidYMid meet"
+            xlinkHref={`/images/cardback.jpg`}
+            transform={` translate(${865-i*0.5} ,${395-i}) rotate(90)  `}
+            x="0"
+            y="0"
+            width={w}
+            height={h} />
+        )
+    }
+
     render() {
         console.log( this.props );
         return <div className="currentgame">
@@ -174,6 +194,7 @@ class CurrentGame extends React.Component {
                             </g>
                         ))}
 
+                        {this.renderDeck()}
                         {this.renderMarkets()}
                         {this.renderSelectedPlayers()}
                     </svg>
@@ -191,7 +212,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        takeSeat : (selectedPlayers) => dispatch( takeSeat(selectedPlayers ))
+        takeSeat : (boardId, selectedPlayers) => dispatch( takeSeat(boardId, selectedPlayers ))
     }
 }
 

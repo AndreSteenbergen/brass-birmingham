@@ -12,8 +12,9 @@ export const setupGame = (numberOfPlayers) => ({
     hotseat : true //at this moment no server is made, so only hotseat ....
 });
 
-export const takeSeat = (selectedPlayers) => ({
+export const takeSeat = (boardId, selectedPlayers) => ({
     type: ActionTypes.TAKE_SEATS,
     domain : ActionTypes.DOMAIN,
+    boardId : boardId,
     selectedPlayers : selectedPlayers
 });
